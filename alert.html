@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Alert</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="favicon_16.ico"/>
+    <link rel="bookmark" href="favicon_16.ico"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- site css -->
+         <script>
+$(document).ready(function(){
+
+    var data = localStorage.getItem('id');
+
+        $("#user_id").val(data);
+
+        if (data !== null) {
+            document.getElementById("user_id").value=data;
+
+        }
+        else{
+                        window.location.href = "login.html";
+}
+   });
+</script>
+
+
+    <link rel="stylesheet" href="dist/css/site.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="dist/js/site.min.js"></script>
+
+  </head>
+  <body>
+     <div class="container-fluid">
+    <!--documents-->
+        <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" role="navigation">
+            <ul class="list-group panel">
+                <li class="list-group-item"><i class="glyphicon glyphicon-align-justify"></i> <b>SIDE PANEL</b></li>
+                <li class="list-group-item"><input type="text" class="form-control search-query" placeholder="Search Something"></li>
+                <li class="list-group-item"><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Dashboard </a></li>
+
+ <li>
+                  <a href="#demo7" class="list-group-item " data-toggle="collapse">Expense manage<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo7">
+                      <a href="add_expense.html" class="list-group-item">Add Expense </a>
+
+
+                    </li>
+                </li>
+                 <li>
+                  <a href="#demo5" class="list-group-item " data-toggle="collapse">Budget Guide<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo5">
+                      <a href="guide.html" class="list-group-item">Ask Guide </a>
+
+
+                    </li>
+                </li>
+
+
+                <li class="list-group-item"><a href="alert.html"><i class="glyphicon glyphicon-th-list"></i> Alert</a></li>
+               <li class="list-group-item"><a href="#" onclick="logout()"><i class="glyphicon glyphicon-th-list"></i> Logout</a></li>
+              </ul>
+          </div>
+          </div>
+			<input type="hidden" id="salary_cus" />
+			<input type="hidden" id="exp_cus" />
+        <br><br>
+    <!--footer-->
+  <div class="container">
+    <div class="col-md-offset-3" id = "alert_msg">
+      <h4>Alert </h4>
+
+
+      </div>
+      <hr>
+       <div class="col-md-offset-3">
+      <button onclick="myFunction()" class="btn btn-success">Check Random Event</button>
+
+		<p id="demo"></p>
+	</div>
+      </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+  var add_data = '';
+  var total = 0;
+  var u_id_cus = localStorage.getItem('id');
+  $.getJSON('http://localhost:8080/api/expenses', function (data) {
+		//console.log(data);
+      $.each( data, function( key, value ) {
+      if(value['user_id'] == u_id_cus)
+	  {
+		total += value["amount"] << 0;
+
+	  }
+	  $('#exp_cus').val(total);
+    });
+	//alert('exp_cus'+total);
+  });
+  $.getJSON('http://localhost:8080/api/users/'+u_id_cus, function (data) {
+	console.log(data);
+	if(data['salary'] != undefined)
+	{
+		var salary = data['salary'];
+	}
+	else
+	{
+		var salary = 0;
+	}
+	$('#salary_cus').val(salary);
+	//alert('salary'+salary);
+  })
+  setTimeout(function(){
+	var salary_cus = $('#salary_cus').val();
+	var exp_cus = $('#exp_cus').val();
+	var total_paid = salary_cus - exp_cus;
+	//alert('total'+total_paid);
+	if(total_paid <= 500)
+	{
+		var app_data = '<label for="" >Your amount is getting low</label> <a href="guide.html"><button type="button" value="help" class="btn btn-danger ">Need Help? </button></a><br><br>';
+		$('#alert_msg').append(app_data);
+	}
+	else
+	{
+		var app_data = '<label for="" >You have more than 500$</label> <button type="button" value="Congrats" class="btn btn-success ">Congrats</button><br><br>';
+		$('#alert_msg').append(app_data);
+	}
+
+  }, 1000);
+
+
+});
+ </script>
+
+
+
+
+
+<script>
+function myFunction() {                                        // Random events
+	 var x = Math.floor((Math.random() * 10) + 1);
+	 var y = Math.floor((Math.random() * 1000) + 1);
+   // var time = new Date().getHours();
+  if (x == 10) {
+   alert("Car accident fee:$"+y);
+} else if (x == 5) {
+    alert("late fee charge:$"+y);
+} else {
+   alert("you have no any random event");
+}
+}
+function logout(){
+    localStorage.clear();
+
+  alert("Logout");
+    window.location.href = "login.html";
+}
+</script>
+  </body>
+</html>

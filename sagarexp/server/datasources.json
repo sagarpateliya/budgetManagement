@@ -1,0 +1,9 @@
+{
+  "sagarexpDB": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "sagarexp",
+    "name": "sagarexpDB",
+    "connector": "mongodb"
+  }
+}

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+
+    var data = localStorage.getItem('id');
+        $("#user_id").val(data);
+
+        if (data !== null) {
+            document.getElementById("user_id").value=data;
+
+        }
+        else{
+                        window.location.href = "login.html";
+}
+   });
+</script>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="favicon_16.ico"/>
+    <link rel="bookmark" href="favicon_16.ico"/>
+    <!-- site css -->
+    <link rel="stylesheet" href="dist/css/site.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="dist/js/site.min.js"></script>
+  </head>
+  <body>
+    <!--nav-->
+    <nav role="navigation" class="navbar navbar-custom">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button data-target="#bs-content-row-navbar-collapse-5" data-toggle="collapse" class="navbar-toggle" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">Expense </a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div id="bs-content-row-navbar-collapse-5" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+              <!-- <li class="disabled"><a href="#">Link</a></li> -->
+             <!--  <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">User Name <b class="caret"></b></a>
+                <ul role="menu" class="dropdown-menu">
+                  <li class="dropdown-header">Setting</li>
+                  <li><a href="#">Profile</a></li>
+
+
+                  <li class="disabled"><a href="#">Signout</a></li> -->
+                </ul>
+              </li>
+            </ul>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    <!--header-->
+    <div class="container-fluid">
+    <!--documents-->
+        <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" role="navigation">
+            <ul class="list-group panel">
+                <li class="list-group-item"><i class="glyphicon glyphicon-align-justify"></i> <b>SIDE PANEL</b></li>
+                <li class="list-group-item"><input type="text" class="form-control search-query" placeholder="Search Something"></li>
+                <li class="list-group-item"><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Dashboard </a></li>
+
+ <li>
+                  <a href="#demo7" class="list-group-item " data-toggle="collapse">Expense manage<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo7">
+                      <a href="add_expense.html" class="list-group-item">Add Expense </a>
+
+
+                    </li>
+                </li>
+                 <li>
+                  <a href="#demo5" class="list-group-item " data-toggle="collapse">Budget Guide<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo5">
+                      <a href="guide.html" class="list-group-item">Ask Guide </a>
+
+
+                    </li>
+                </li>
+
+
+                <li class="list-group-item"><a href="alert.html"><i class="glyphicon glyphicon-th-list"></i> Alert</a></li>
+              <li class="list-group-item"><a href="#" onclick="logout()"><i class="glyphicon glyphicon-th-list"></i> Logout</a></li>
+              </ul>
+          </div>
+
+    <!--footer-->
+
+
+
+<style type="text/css">
+.homeb{
+  border:1px solid gray;
+  padding-top: 5px;
+  border-radius: 20px;
+  background-color: #4FC1E9;
+  margin: 20px;
+}
+
+</style>
+<div class="col-xs-12 col-sm-9 content">
+    <div class="col-md-3 homeb">
+  <center>   <h3>Total Budget</h3>
+    <hr>
+     <h3 id="u_salary">0$</h3></center>
+    </div>
+     <div class="col-md-3 homeb">
+  <center>   <h3 >Total Expense</h3>
+    <hr>
+     <h3 id="u_total">0$</h3></center>
+    </div>
+     <div class="col-md-3 homeb">
+  <center>   <h3>Fixed Deposit</h3>
+    <hr>
+     <h3 id="u_fd">0$</h3></center>
+    </div>
+
+      </div>
+    </div>
+    </div>
+	<div class="container"><br><br>
+	<h3>Add Life time Achievement</h3>
+  <form name="fd" id="fd">
+    <input type="text" class="form-control" name="userid" id="user_id" placeholder="" autocomplete="off"  /><br>
+    <input type="number" name="fd" id="fix_depo" placeholder="add amount" class="form-control"><br>
+    <input type="date" id="date_o" name="expdate" class="form-control"><br>
+	<input type="hidden" id="old_exp" value="" />
+    <input type="submit" class="btn btn-success" id="sub_data">
+  </form>
+	</div>
+<script type="text/javascript">
+ $( document ).ready(function() {
+ var u_id_cus = localStorage.getItem('id');
+
+ //total salary
+  $.getJSON('http://localhost:8080/api/users/'+u_id_cus, function (data) {
+	if(data['salary'] != undefined)
+	{
+		var salary = data['salary']+'$';
+	}
+	else
+	{
+		var salary = '0$';
+	}
+
+	$('#u_salary').text(salary);
+	//console.log(data);
+  })
+
+  //total expense
+  var total = 0;
+  $.getJSON('http://localhost:8080/api/expenses', function (data) {
+      $.each( data, function( key, value ) {
+	  if(value['user_id'] == u_id_cus)
+	  {
+		total += value["amount"] << 0;
+	  }
+    });
+	$('#u_total').text(total+'$');
+  });
+});
+</script>
+<script>
+$(document).ready(function(){
+
+var u_id_cus = localStorage.getItem('data');
+
+
+	// FD
+
+	$.getJSON('http://localhost:8080/api/wallets', function (data) {console.log(data);
+      $.each( data, function( key, value ) {
+    if(value['user_id'] == u_id_cus)
+    {
+      if(value['fd'] != null)
+  {
+  $('#u_fd').text(value['fd']+'$');
+  $('#old_exp').val(value['fd']);
+  }
+  else
+  {
+  $('#u_fd').text('0$');
+  $('#old_exp').val(0);
+  }
+    }
+    });
+
+  });
+
+  $('#sub_data').click(function(){
+	 var user_id = $('#user_id').val();
+	 var fix_depo = $('#fix_depo').val();
+	 var date_o = $('#date_o').val();
+	 var old_exp = $('#old_exp').val();
+
+	 var total_dop = parseInt(fix_depo) + parseInt(old_exp);
+	 var ser = 'fd='+total_dop+'&expdate='+date_o+'&userid='+user_id;
+	 $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/api/wallets',
+            data: ser
+        })
+        .done(function(data){
+            // show the response
+            $('#response').html(data);
+            document.getElementById("fd").reset();
+			$('#u_fd').text(total_dop+'$');
+			$('#old_exp').val(total_dop);
+            console.log(data);
+            //console.log(data);
+        })
+        .fail(function() {
+            // just in case posting your form failed
+            alert( "Posting failed." );
+        });
+        // to prevent refreshing the whole page page
+        return false;
+	 alert(total_dop);
+  });
+
+
+
+
+});
+function logout(){
+    localStorage.clear();
+
+  alert("Logout");
+    window.location.href = "login.html";
+}
+</script>

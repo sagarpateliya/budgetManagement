@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>cat Manage</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="favicon_16.ico"/>
+    <link rel="bookmark" href="favicon_16.ico"/>
+    <!-- site css -->
+    <link rel="stylesheet" href="../dist/css/site.min.css">
+   <!--  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+    --> <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../dist/js/site.min.js"></script>
+    <style>
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+
+        color: #C1C3C6
+      }
+    </style>
+  </head>
+  <body>
+    <nav role="navigation" class="navbar navbar-custom">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button data-target="#bs-content-row-navbar-collapse-5" data-toggle="collapse" class="navbar-toggle" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">Expense </a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div id="bs-content-row-navbar-collapse-5" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                </ul>
+              </li>
+            </ul>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    <!--header-->
+    <div class="container-fluid">
+    <!--documents-->
+        <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" role="navigation">
+            <ul class="list-group panel">
+                <li class="list-group-item"><i class="glyphicon glyphicon-align-justify"></i> <b>SIDE PANEL</b></li>
+                <li class="list-group-item"><input type="text" class="form-control search-query" placeholder="Search Something"></li>
+                <li class="list-group-item"><a href="#"><i class="glyphicon glyphicon-home"></i>Dashboard </a></li>
+                <li>
+                  <a href="#demo4" class="list-group-item " data-toggle="collapse">Add Career  <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo4">
+
+                      <a href="career_add.html" class="list-group-item">Add Career </a>
+
+
+                    </li>
+                </li>
+ <li>
+                  <a href="#demo7" class="list-group-item " data-toggle="collapse">Expense cat<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo7">
+                      <a href="add_cat.html" class="list-group-item">Add cat </a>
+
+
+                    </li>
+                </li>
+                 <li>
+                  <a href="#demo5" class="list-group-item " data-toggle="collapse">Budget Guide<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo5">
+                      <a href="guide.html" class="list-group-item">Help </a>
+
+
+                    </li>
+                </li>
+
+
+                <li class="list-group-item"><a href="user.html"><i class="glyphicon glyphicon-th-list"></i> user list</a></li>
+              </ul>
+          </div>
+
+
+
+      <form class="form-signin" role="form"  id="exp_cat" name="exp_cat">
+        <h3 class="form-signin-heading">Add category</h3>
+        <div class="form-group">
+         <label for="username">Expense category</label>
+
+
+            <input type="text" class="form-control" name="cat_name" id="cat_name" placeholder="category" autocomplete="off" />
+
+</div>
+
+
+       <!--  <label class="checkbox">
+          <input type="checkbox" value="remember-me"> &nbsp Remember me
+        </label> -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Add category</button>
+      </form>
+
+    </div>
+    <div class="clearfix"></div>
+    <br> <br> <br> <br> <br>
+    <div class="container" >
+      <table id="show-data" class="table table-border" >
+      <tr >
+        <th>Category Name</th>
+        <th>Action</th>
+      </tr>
+      </table>
+    </div>
+
+    <!--footer-->
+
+  </div>
+   <div id='response'></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
+<script>
+$(document).ready(function(){
+    $('#exp_cat').submit(function(){
+
+        // show that something is loading
+        $('#response').html("<b>Loading response...</b>");
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/api/exp_categories',
+            data: $(this).serialize()
+
+        })
+        .done(function(data){
+
+            // show the response
+            $('#response').html(data);
+            document.getElementById("exp_cat").reset();
+
+
+        })
+        .fail(function() {
+
+            // if error
+            alert( "Posting failed." );
+
+        });
+
+        // to prevent refreshing the whole page page
+        return false;
+
+    });
+});
+
+
+$('#get-data').click(function () {
+  $.getJSON('http://localhost:8080/api/exp_categories', function (data) {
+    console.log(data);
+  });
+});
+
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+  var add_data = '';
+
+  $.getJSON('http://localhost:8080/api/exp_categories', function (data) {
+      $.each( data, function( key, value ) {
+      var id = "'"+value["id"]+"'";
+      add_data += '<tr><td>'+value["cat_name"]+'</td><td><button class="btn btn-danger" onclick="dlt_cat('+id+')">DELETE</button></td></tr>';
+    });
+    $('#show-data').append(add_data);
+  });
+});
+
+
+function dlt_cat(id){
+
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/api/exp_categories/'+id
+
+        })
+        .done(function(data){
+
+            // show the response
+          location.reload();
+
+        })
+        .fail(function() {
+
+            // just in case posting your form failed
+            alert( "Posting failed." );
+
+        });
+
+        // to prevent refreshing the whole page page
+        return false;
+}
+
+ </script>
+
+  </body>
+</html>

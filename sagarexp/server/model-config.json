@@ -1,0 +1,58 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "sagarexpDB"
+  },
+  "AccessToken": {
+    "dataSource": "sagarexpDB",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "sagarexpDB",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "sagarexpDB",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "sagarexpDB",
+    "public": false
+  },
+  "career": {
+    "dataSource": "sagarexpDB",
+    "public": true
+  },
+  "expense": {
+    "dataSource": "sagarexpDB",
+    "public": true
+  },
+  "exp_category": {
+    "dataSource": "sagarexpDB",
+    "public": true
+  },
+  "guide": {
+    "dataSource": "sagarexpDB",
+    "public": true
+  },
+  "wallet": {
+    "dataSource": "sagarexpDB",
+    "public": true
+  }
+}

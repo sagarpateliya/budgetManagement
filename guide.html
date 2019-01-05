@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guide</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="favicon_16.ico"/>
+    <link rel="bookmark" href="favicon_16.ico"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- site css -->
+         <script>
+$(document).ready(function(){
+
+    var data = localStorage.getItem('id');
+
+        $("#user_id").val(data);
+
+        if (data !== null) {
+            document.getElementById("user_id").value=data;
+
+        }
+        else{
+                        window.location.href = "login.html";
+}
+   });
+</script>
+
+
+    <link rel="stylesheet" href="dist/css/site.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="dist/js/site.min.js"></script>
+
+  </head>
+  <body>
+     <div class="container-fluid">
+    <!--documents-->
+        <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" role="navigation">
+            <ul class="list-group panel">
+                <li class="list-group-item"><i class="glyphicon glyphicon-align-justify"></i> <b>SIDE PANEL</b></li>
+                <li class="list-group-item"><input type="text" class="form-control search-query" placeholder="Search Something"></li>
+                <li class="list-group-item"><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Dashboard </a></li>
+
+ <li>
+                  <a href="#demo7" class="list-group-item " data-toggle="collapse">Expense manage<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo7">
+                      <a href="add_expense.html" class="list-group-item">Add Expense </a>
+
+
+                    </li>
+                </li>
+                 <li>
+                  <a href="#demo5" class="list-group-item " data-toggle="collapse">Budget Guide<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <li class="collapse" id="demo5">
+                      <a href="guide.html" class="list-group-item">Ask Guide </a>
+
+
+                    </li>
+                </li>
+
+
+                <li class="list-group-item"><a href="alert.html"><i class="glyphicon glyphicon-th-list"></i> Alert</a></li>
+               <li class="list-group-item"><a href="#" onclick="logout()"><i class="glyphicon glyphicon-th-list"></i> Logout</a></li>
+              </ul>
+          </div>
+          </div>
+    <div class="container">
+
+      <form class="form-signin" role="form" id="guide">
+        <h3 class="form-signin-heading">Guide</h3>
+
+<div class="form-group">
+  <label for="sel1">Select Category:</label>
+  <select class="form-control" id="cat_id">
+     </select>
+</div>
+
+        <div class="form-group">
+         <label for="username">Enter Title</label>
+
+
+            <input type="text" class="form-control" name="title" id="title" placeholder="title" autocomplete="off" />
+
+</div>
+ <div class="form-group">
+         <label for="username">User ID</label>
+          <!-- automatically collect from session id.just for information right now -->
+
+            <input type="text" class="form-control" name="user-id" id="user_id" placeholder="userid" autocomplete="off" />
+
+</div>
+        <div class="form-group">
+         <label for="username">Help*</label>
+
+
+            <textarea class="form-control" name="note" id="note" placeholder="help" autocomplete="off" />
+          </textarea>
+          </div>
+
+
+
+
+       <!--  <label class="checkbox">
+          <input type="checkbox" value="remember-me"> &nbsp Remember me
+        </label> -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Ask Que.</button>
+      </form>
+
+
+
+
+    </div>
+	<div class="container">
+    <table id="show-data" class="table table-border" style="display:inline-block" >
+      <tr >
+      	<th>user id</th>
+        <th>question</th>
+        <th>reply</th>
+      </tr>
+      </table>
+  </div>
+    <div class="clearfix"></div>
+    <br><br>
+    <!--footer-->
+
+  </body>
+</html>
+<script type="text/javascript">
+ $( document ).ready(function() {
+ var u_id_cus = localStorage.getItem('id');
+ //alert(data);
+
+  $.getJSON('http://localhost:8080/api/guides', function (data) {
+
+    	$.each( data, function( key, value ) {
+      //alert( key + ": " + value );
+	  //var add_data = '';
+	  var u_id = "'"+value["user-id"]+"'";
+	  var title = "'"+value["title"]+"'";
+	  var question = "'"+value["note"]+"'";
+	  var n_id = "'"+value["id"]+"'";
+	  if(value["user-id"] == u_id_cus)
+	  {
+		 var add_data = '<tr><td>'+value["user-id"]+'</td><td>'+value["note"]+'</td><td>'+value["reply"]+'</td></tr>';
+		$('#show-data').append(add_data);
+	  }
+    });
+    //$('#show-data').append(add_data);
+  });
+
+  $.getJSON('http://localhost:8080/api/exp_categories/', function (data) {
+    var add_data = '';
+    $.each( data, function( key, value ) {
+      //alert( key + ": " + value );
+      add_data += '<option value="'+value["id"]+'">'+value["cat_name"]+'</option>';
+    });
+    $('#cat_id').append(add_data);
+  });
+});
+
+</script>
+<script>
+$(document).ready(function(){
+    $('#guide').submit(function(){
+		console.log($(this).serialize());
+		var u_id_cus = localStorage.getItem('data');
+        // show that something is loading
+        $('#response').html("<b>Loading response...</b>");
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/api/guides',
+            data: $(this).serialize()
+        })
+        .done(function(data){
+
+            // show the response
+            $('#response').html(data);
+            document.getElementById("guide").reset();
+
+            //console.log(data);
+
+        })
+        .fail(function() {
+
+            // just in case posting your form failed
+            alert( "Posting failed." );
+
+        });
+
+        // to prevent refreshing the whole page page
+        return false;
+
+    });
+});
+function logout(){
+    localStorage.clear();
+
+  alert("Logout");
+    window.location.href = "login.html";
+}
+</script>
